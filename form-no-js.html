@@ -9,7 +9,7 @@
 
     <title>Natasha Tran</title>
     <!-- defines relationship btwn current doc and an external resource (rel is relationship, href is the url of the linked doc) -->
-    <link rel="stylesheet" href="styles.css"> 
+    <link rel="stylesheet" href="form-no-js.css"> 
     <style>
         #moments-images div {
             display: flex;
@@ -124,23 +124,22 @@
                 <h2>CONTACT ME</h2>
                 <form action="https://httpbin.org/post" method="POST">
                     <label for="name">name*</label>
-                    <input type="text" id="name" name="name" required>
-        
+                    <input type="text" id="name" name="name" required minlength="2" maxlength="50">
+                
                     <label for="email">email*</label>
                     <input type="email" id="email" name="email" required>
-        
+                
                     <label for="subject">subject*</label>
-                    <input type="text" id="subject" name="subject" required>
-        
+                    <input type="text" id="subject" name="subject" required minlength="2" maxlength="100">
+                
                     <label for="message">message*</label>
-                    <textarea id="message" name="message" required></textarea>
-                    
+                    <textarea id="message" name="message" required minlength="10" maxlength="500"></textarea>
+                
                     <output id="error-message" class="error-message"></output>
-
                     <output id="info-message" class="info-message"></output>
-
+                
                     <button type="submit">submit</button>
-                </form>
+                </form>                
             </div>
         </section>
         

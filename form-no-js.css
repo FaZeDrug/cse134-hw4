@@ -280,7 +280,7 @@ figcaption {
     background: #333;
 }
 
-
+/* the below is the two output messages and any validation styling for the contact form*/
 
 .error-message {
     color: red;
@@ -297,6 +297,37 @@ figcaption {
     text-align: center;
     margin-bottom: 10px;
 }
+
+/* Style invalid fields */
+input:invalid, textarea:invalid {
+    border: 2px solid red;
+    background-color: #ffe6e6;
+}
+
+/* Style valid fields */
+input:valid, textarea:valid {
+    border: 2px solid green;
+    background-color: #e6ffe6;
+}
+
+/* Error message styling */
+.error-message {
+    color: red;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+/* Success message styling */
+.info-message {
+    color: green;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 
 
 
