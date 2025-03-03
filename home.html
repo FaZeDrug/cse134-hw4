@@ -40,7 +40,13 @@
     <header>
         
         <nav>
-            <div class="logo"> NT </div>
+            <div class="logo-container">
+                <div class="logo"> NT </div>
+                <button id="theme-toggle" class="theme-toggle">🌞</button> 
+            </div>
+            
+
+            
 
                 <!-- hamburger icon here -->
                 <input type="checkbox" id="menu-toggle" class="menu-checkbox">
@@ -59,7 +65,11 @@
                 <!-- <li><a href="experiments.html">experiments</a></li> experiments is kinda bad -->
             </ul>
         </nav>
-        <!-- <button>Toggle Theme</button> -->
+        
+        <noscript>
+            <p class="noscript-warning">Dark mode toggle requires JavaScript to work.</p>
+        </noscript>
+        
     </header>
     <main>
         <noscript>
@@ -124,19 +134,20 @@
                 <h2>CONTACT ME</h2>
                 <form action="https://httpbin.org/post" method="POST">
                     <label for="name">name*</label>
-                    <input type="text" id="name" name="name" required>
-        
+                    <input type="text" id="name" name="name" required minlength="2" maxlength="50">
+                    
                     <label for="email">email*</label>
                     <input type="email" id="email" name="email" required>
-        
-                    <label for="subject">subject*</label>
-                    <input type="text" id="subject" name="subject" required>
-        
-                    <label for="message">message*</label>
-                    <textarea id="message" name="message" required></textarea>
                     
-                    <output id="error-message" class="error-message"></output>
+                    <label for="subject">subject*</label>
+                    <input type="text" id="subject" name="subject" required minlength="2" maxlength="100">
+                    
+                    <label for="message">message*</label>
+                    <textarea id="message" name="message" required minlength="10" maxlength="500"></textarea>
 
+                    <!-- error msgs -->
+                    <output id="char-error-message" class="error-message"></output>
+                    <output id="error-message" class="error-message"></output>
                     <output id="info-message" class="info-message"></output>
 
                     <button type="submit">submit</button>
@@ -151,5 +162,9 @@
     <footer>
         <p>&copy; <em> 2025 Natasha Tran. All rights reserved. </em></p>
     </footer>
+
+    <script src="contact.js"></script>
+    <script src="theme.js"></script>
+
 </body>
 </html>

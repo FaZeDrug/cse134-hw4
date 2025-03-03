@@ -18,17 +18,75 @@ html, body {
     max-width: 100vw; /* ensures no element exceeds the screen width */
 }
 
-:root { /* making css vars */
+/* Light Mode (Default) */
+:root {
+    --background-color: white;
     --text-color: black;
-    --background-color: white; 
     --border-color: black;
 }
 
+/* Dark Mode */
 .dark-mode {
     --background-color: black;
     --text-color: white;
     --border-color: white;
 }
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+}
+
+/*below are things for the dark mode light mode toggle*/
+
+.theme-toggle {
+    border: none;
+    background: none;
+    font-size: 20px;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+.dark-mode .theme-toggle {
+    color: white;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between NT and the toggle */
+}
+
+.logo {
+    font-weight: bold;
+}
+
+.theme-checkbox {
+    display: none;
+}
+
+.theme-label {
+    cursor: pointer;
+    font-size: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.theme-checkbox:checked ~ .theme-label::before {
+    content: "🌙"; /* Moon icon for dark mode */
+}
+
+.theme-checkbox:not(:checked) ~ .theme-label::before {
+    content: "🌞"; /* Sun icon for light mode */
+}
+
+.noscript-warning {
+    background-color: red;
+    color: white;
+    text-align: center;
+    padding: 10px;
+    font-size: 14px;
+}
+
 
 /* navbar */
 nav {

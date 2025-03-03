@@ -1,58 +1,85 @@
+let form_errors = [];
+
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.querySelector("form");
+    const nameInput = document.getElementById("name");
+    const emailInput = document.getElementById("email");
+    const subjectInput = document.getElementById("subject");
+    const messageInput = document.getElementById("message");
+    const errorMessage = document.getElementById("error-message");
+    const charErrorMessage = document.getElementById("char-error-message");
+    const charCount = document.createElement("p");
+    charCount.id = "char-count";
+    messageInput.parentNode.insertBefore(charCount, messageInput.nextSibling);
 
-    form.addEventListener("submit", function (event) {
-        let isValid = true; // Track form validity
-        let errorMessages = []; // Store all errors
-        let successMessage = "Successfully submitted!"; // Success message
+    const maxChars = 500;
+    const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const messagePattern = /^[A-Za-z0-9.,!?()'":;_&$%#@*+/-\s]*$/;
 
-        // get form fields
-        const nameInput = document.getElementById("name");
-        const emailInput = document.getElementById("email");
-        const subjectInput = document.getElementById("subject");
-        const messageInput = document.getElementById("message");
+    function showError(message, field, fieldName) {
+        errorMessage.textContent = message;
+        errorMessage.style.opacity = "1";
+        field.classList.add("flash-error");
+        field.style.border = "2px solid red";
 
-        // get output elements
-        const errorOutput = document.getElementById("error-message");
-        const infoOutput = document.getElementById("info-message");
+        setTimeout(() => {
+            errorMessage.style.opacity = "0";
+            field.classList.remove("flash-error");
+        }, 2000);
 
-        // this is resetting previous messages
-        errorOutput.textContent = "";
-        infoOutput.textContent = "";
+        form_errors.push({ field: fieldName, message: message });
+        console.log("Updated form_errors:", form_errors);
+    }
 
-        // validating name field
-        if (!nameInput.value.trim()) {
-            errorMessages.push("Name field required");
-            isValid = false;
+    emailInput.addEventListener("input", function () {
+        emailInput.setCustomValidity("");
+
+        if (!emailInput.checkValidity()) {
+            emailInput.setCustomValidity("Please enter a valid email address.");
         }
 
-        // validate emai
-        if (!emailInput.value.trim()) {
-            errorMessages.push("Email field required");
-            isValid = false;
-        } else if (!emailInput.value.includes("@")) {
-            errorMessages.push("Enter a valid email!");
-            isValid = false;
-        }
-
-        // validateing sub
-        if (!subjectInput.value.trim()) {
-            errorMessages.push("Subject field required");
-            isValid = false;
-        }
-
-        // validate msg field
-        if (!messageInput.value.trim()) {
-            errorMessages.push("Message field required");
-            isValid = false;
-        }
-
-        // showing error msgs
-        if (!isValid) {
-            event.preventDefault(); // Prevent form submission
-            errorOutput.textContent = errorMessages.join("\n");
+        if (!emailPattern.test(emailInput.value)) {
+            showError("Enter a valid email (e.g., name@example.com)!", emailInput, "email");
+            emailInput.style.border = "2px solid red";
         } else {
-            infoOutput.textContent = successMessage;
+            emailInput.style.border = "2px solid green";
         }
     });
+
+    form.addEventListener("submit", function (event) {
+        form_errors.length = 0;
+        errorMessage.textContent = "";
+        let isValid = true;
+
+        if (!nameInput.value.trim()) {
+            showError("Name field required", nameInput, "name");
+            isValid = false;
+        }
+
+        if (!emailInput.value.trim()) {
+            showError("Email field required", emailInput, "email");
+            isValid = false;
+        } else if (!emailPattern.test(emailInput.value)) {
+            showError("Enter a valid email (e.g., name@example.com)!", emailInput, "email");
+            isValid = false;
+        }
+
+        let errorField = document.getElementById("form_errors");
+        if (!errorField) {
+            errorField = document.createElement("input");
+            errorField.type = "hidden";
+            errorField.id = "form_errors";
+            errorField.name = "form-errors";
+            form.appendChild(errorField);
+        }
+        errorField.value = JSON.stringify(form_errors);
+
+        console.log("Final form_errors before submission:", form_errors);
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    });
+
+    charCount.textContent = `${maxChars} characters remaining`;
 });
